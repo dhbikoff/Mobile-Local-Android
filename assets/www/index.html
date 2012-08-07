@@ -89,9 +89,6 @@
         <script type="text/javascript">
         // <![CDATA[
         
-        // local storage array
-        var spot = new Array();
-        
         function geo() {
             // set some geo options
             var opts = {
@@ -156,7 +153,6 @@
                 $("#foo").hide();
                 $("#foo").fadeIn("600");
                 $("foo").html("Your Location: " + zip);
-                storage(zip);
                 yweath(zip);
                 gnews(zip);
             });
@@ -225,21 +221,6 @@
                 }
             });
         }
-
-        function storage(zip) {
-            if (localStorage.length != 0) {
-                var local_array = JSON.parse(localStorage['zips']);
-                local_array.push(zip);
-            } else {
-                var local_array = new Array(zip);
-            }
-            
-            localStorage['zips']=JSON.stringify(local_array);
-            $("#foot").html("<p>Previous Searches:</p>");
-            for (i in local_array) {
-                $("#foot").append(decodeURIComponent(local_array[i]) + " ");
-            }
-        }
         
         function noshow() {
             $("#location").hide();
@@ -247,7 +228,7 @@
         // ]]>
         </script>
     </head>
-    <body onload="footer(), noshow()">
+    <body onload="noshow()">
     <div id="title">
     <h1 id="moblo"> <a href="index.html">Mobile Local</a></h1>
     </div>
@@ -276,7 +257,6 @@
         var zip = encodeURIComponent(temp);
         yweath(zip);
         gnews(zip);
-        storage(zip);
       }
     </script>
     <br/>
@@ -295,28 +275,5 @@
       </div>
       </ul>
     </div>  
-    <br/><br/>
-    <div id="foot">
-    <script>
-        function footer () {
-            if (localStorage.length != 0) {
-                var foot_array = JSON.parse(localStorage['zips']);
-                $("#foot").html("<p>Previous Searches:</p>");
-            
-                for (i in foot_array)
-                    $("#foot").append(decodeURIComponent(foot_array[i]) + " ");
-            }
-        }
-    </script>
-    </div>
-    <div id="clr">
-      <input type="submit" value="clear history" onClick="clr()"/>
-      <script>
-        function clr() {
-            localStorage.clear();
-            $("#foot").html("");
-        }
-      </script>
-    </div>
     </body>
 </html>
